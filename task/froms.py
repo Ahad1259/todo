@@ -18,8 +18,11 @@ class TaskFrom(forms.ModelForm):
             }),
             'due_date': forms.DateInput(attrs={
                 'class': 'w-md mt-2 px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400',
-                'placeholder': 'Enter Age Here',
                 'type' : 'date'
+            }),
+            'due_time': forms.TimeInput(attrs={
+                'class': 'w-md mt-2 px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400',
+                'type' : 'time'
             }),
             'status': forms.Select(attrs={
                 'class': 'form-select px-4 py-2 rounded border border-gray-300 w-md',
