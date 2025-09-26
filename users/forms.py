@@ -13,12 +13,17 @@ class UserRegistrationForm(UserCreationForm):
                 'class': 'w-md mt-2 px-4 py-1 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400',
                 'placeholder': 'Enter Username Here'
             }),
-            'password1': forms.PasswordInput(attrs={
+            }
+        
+        def __init__(self, *args, **kwargs):
+            super(UserRegistrationForm, self).__init__(*args, **kwargs)
+
+            self.fields['password1'].widget.attrs.update({
                 'class': 'w-md mt-2 px-4 py-1 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400',
                 'placeholder': 'Enter Your Password'
-            }),
-            'password2': forms.PasswordInput(attrs={
+            })
+
+            self.fields['password2'].widget.attrs.update({
                 'class': 'w-md mt-2 px-4 py-1 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400',
-                'placeholder': 'Enter Confirm Password'
-            }),
-            }
+                'placeholder': 'Confirm Your Password'
+            })
