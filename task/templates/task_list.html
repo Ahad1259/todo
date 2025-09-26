@@ -1,0 +1,77 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    Task List
+{% endblock %}
+
+{% block content %}
+<section class="mb-6">
+      <h2 class="text-2xl font-bold text-blue-700 mb-4">Task List</h2>
+      <form method="get" class="flex flex-wrap gap-4 items-center">
+        <select name="status" class="border border-gray-300 rounded px-4 py-2">
+          <option value="all" {% if status_filter == 'all' %}selected{% endif %}>All Tasks</option>
+          <option value="completed" {% if status_filter == 'completed' %}selected{% endif %}>Completed</option>
+          <option value="pending" {% if status_filter == 'pending' %}selected{% endif %}>Pending</option>
+        </select>
+
+        <select name="category" class="border border-gray-300 rounded px-4 py-2">
+          <option value="all" {% if category_filter == 'all' %}selected{% endif %}>All Categories</option>
+          <option value="personal" {% if category_filter == 'personal' %}selected{% endif %}>Personal</option>
+          <option value="work" {% if category_filter == 'work' %}selected{% endif %}>Work</option>
+          <option value="others" {% if category_filter == 'others' %}selected{% endif %}>Others</option>
+          <!-- Add more categories here if needed -->
+        </select>
+
+        <button type="submit" class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded">Filter</button>
+      </form>
+    </section>
+
+    <!-- Tasks Display -->
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+      
+      <!-- Completed Tasks -->
+      <div>
+        <h3 class="text-lg font-semibold text-green-700 mb-4">Completed Tasks</h3>
+        {% for task in completed_task %}
+        <div class="bg-white border border-green-300 p-4 rounded shadow mb-4">
+          <h4 class="text-md font-semibold">{{ task.title }}</h4>
+          <p class="text-sm text-gray-600 mt-1 mb-3">{{ task.discription }}</p>
+          <div class="flex items-center gap-2 mb-2">
+            <span class="bg-green-600 text-white text-xs font-semibold px-2 py-1 rounded">Completed</span>
+            <span class="bg-gray-300 text-gray-700 text-xs font-semibold px-2 py-1 rounded">{{ task.category }}</span>
+          </div>
+          <p class="text-sm text-gray-500 mb-4">Due: {{ task.due_date|date:"M. d, Y" }} at {{ task.due_time|time:"g:i a" }}</p>
+          <div class="flex gap-2">
+            <a href="{% url 'task_detail' task.id %}" class="bg-cyan-500 hover:bg-cyan-600 text-white px-3 py-1 rounded text-sm">View</a>
+            <a href="{% url 'task_delete' task.id %}" class="bg-red-500 hover:bg-red-600 text-white px-3 py-1 rounded text-sm">Delete</a>
+          </div>
+        </div>
+        {% empty %}
+        <p class="text-gray-500">No completed tasks found.</p>
+        {% endfor %}
+      </div>
+
+      <!-- Pending Tasks -->
+      <div>
+        <h3 class="text-lg font-semibold text-yellow-600 mb-4">Pending Tasks</h3>
+        {% for task in pending_task %}
+        <div class="bg-white border border-yellow-300 p-4 rounded shadow mb-4">
+          <h4 class="text-md font-semibold">{{ task.title }}</h4>
+          <p class="text-sm text-gray-600 mt-1 mb-3">{{ task.description }}</p>
+          <div class="flex items-center gap-2 mb-2">
+            <span class="bg-yellow-400 text-white text-xs font-semibold px-2 py-1 rounded">Pending</span>
+            <span class="bg-gray-300 text-gray-700 text-xs font-semibold px-2 py-1 rounded">{{ task.category }}</span>
+          </div>
+          <p class="text-sm text-gray-500 mb-4">Due: {{ task.due_date|date:"M. d, Y" }} at {{ task.due_time|time:"g:i a" }}</p>
+          <div class="flex gap-2 flex-wrap">
+            <a href="{% url 'task_detail' task.id %}" class="bg-cyan-500 hover:bg-cyan-600 text-white px-3 py-1 rounded text-sm">View</a>
+            <a href="{% url 'task_delete' task.id %}" class="bg-red-500 hover:bg-red-600 text-white px-3 py-1 rounded text-sm">Delete</a>
+            <a href="{% url 'task_mark_completed' task.id %}" class="bg-green-600 hover:bg-green-700 text-white px-3 py-1 rounded text-sm">Mark as Completed</a>
+          </div>
+        </div>
+        {% empty %}
+        <p class="text-gray-500">No pending tasks found.</p>
+        {% endfor %}
+      </div>
+    </div>
+{% endblock %}
