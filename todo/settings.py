@@ -16,7 +16,7 @@ SECRET_KEY = 'django-insecure-b61&*ym9*)!vesbwhy=*bcfol4y6%)u7vem3x%bqkke8dt75gv
 DEBUG = True
 
 ALLOWED_HOSTS = ['https://todo-i63p.onrender.com', 'todo-i63p.onrender.com']
-CSRF_TRUSTED_ORIGINS = ['https://todo-i63p.onrender.com', 'todo-i63p.onrender.com']
+CSRF_TRUSTED_ORIGINS = ['https://todo-i63p.onrender.com']
 
 
 # Application definition
